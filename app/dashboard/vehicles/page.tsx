@@ -29,6 +29,7 @@ export default function VehiclesPage() {
         toast({
           title: "Success",
           description: "Vehicle deleted successfully",
+          variant: "success",
         });
       } catch {
         toast({
@@ -59,7 +60,7 @@ export default function VehiclesPage() {
           </p>
         </div>
         <Link href="/dashboard/vehicles/new">
-          <Button>
+          <Button variant="default" size="lg">
             <Plus className="mr-2 h-4 w-4" />
             Add Vehicle
           </Button>
@@ -84,7 +85,7 @@ export default function VehiclesPage() {
             <div className="text-center py-8">
               <p className="text-muted-foreground">No vehicles found</p>
               <Link href="/dashboard/vehicles/new">
-                <Button className="mt-4">
+                <Button className="mt-4" variant="success" size="lg">
                   <Plus className="mr-2 h-4 w-4" />
                   Add First Vehicle
                 </Button>
@@ -129,20 +130,21 @@ export default function VehiclesPage() {
                     <TableCell>
                       <div className="flex space-x-2">
                         <Link href={`/dashboard/vehicles/${vehicle.id}`}>
-                          <Button variant="outline" size="sm">
+                          <Button variant="ghost" size="sm" className="hover:bg-blue-50 hover:text-blue-600">
                             <Eye className="h-4 w-4" />
                           </Button>
                         </Link>
                         <Link href={`/dashboard/vehicles/${vehicle.id}/edit`}>
-                          <Button variant="outline" size="sm">
+                          <Button variant="ghost" size="sm" className="hover:bg-yellow-50 hover:text-yellow-600">
                             <Edit className="h-4 w-4" />
                           </Button>
                         </Link>
                         <Button
-                          variant="outline"
+                          variant="ghost"
                           size="sm"
                           onClick={() => handleDelete(vehicle.id)}
                           disabled={deleteVehicle.isPending}
+                          className="hover:bg-red-50 hover:text-red-600"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>

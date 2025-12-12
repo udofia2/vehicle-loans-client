@@ -102,7 +102,8 @@ export default function NewValuationPage() {
       toast({
         title: "Success",
         description: "Valuation created successfully",
-      })
+        variant: "success",
+      });
 
       router.push("/dashboard/valuations")
     } catch (error) {

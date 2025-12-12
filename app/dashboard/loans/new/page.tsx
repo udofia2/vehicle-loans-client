@@ -127,7 +127,8 @@ export default function NewLoanApplicationPage() {
       toast({
         title: "Success",
         description: "Loan application created successfully",
-      })
+        variant: "success",
+      });
 
       router.push("/dashboard/loans")
     } catch (error) {

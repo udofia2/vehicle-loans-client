@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { offerApi } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
+import { extractErrorMessage } from "@/lib/utils/error";
 
 /**
  * Loan offer related React Query hooks
@@ -79,11 +80,14 @@ export const useCreateOffer = () => {
         description: "Loan offer created successfully",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = extractErrorMessage(
+        error,
+        "Failed to create loan offer"
+      );
       toast({
         title: "Error",
-        description:
-          error?.response?.data?.message || "Failed to create loan offer",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -102,11 +106,14 @@ export const useDeleteOffer = () => {
         description: "Loan offer deleted successfully",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = extractErrorMessage(
+        error,
+        "Failed to delete loan offer"
+      );
       toast({
         title: "Error",
-        description:
-          error?.response?.data?.message || "Failed to delete loan offer",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -137,11 +144,14 @@ export const useUpdateOffer = () => {
         description: "Loan offer updated successfully",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = extractErrorMessage(
+        error,
+        "Failed to update offer status"
+      );
       toast({
         title: "Error",
-        description:
-          error?.response?.data?.message || "Failed to update loan offer",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -161,11 +171,14 @@ export const useAcceptOffer = () => {
         description: "Loan offer accepted successfully",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = extractErrorMessage(
+        error,
+        "Failed to accept loan offer"
+      );
       toast({
         title: "Error",
-        description:
-          error?.response?.data?.message || "Failed to accept loan offer",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -185,11 +198,14 @@ export const useDeclineOffer = () => {
         description: "Loan offer declined",
       });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
+      const errorMessage = extractErrorMessage(
+        error,
+        "Failed to decline loan offer"
+      );
       toast({
         title: "Error",
-        description:
-          error?.response?.data?.message || "Failed to decline loan offer",
+        description: errorMessage,
         variant: "destructive",
       });
     },

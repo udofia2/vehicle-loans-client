@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { toast } from "@/hooks/use-toast";
+import { extractErrorMessage } from "@/lib/utils/error";
 
 export default function NewVehiclePage() {
   const router = useRouter();
@@ -40,12 +41,15 @@ export default function NewVehiclePage() {
       toast({
         title: "Success",
         description: "Vehicle created successfully",
+        variant: "success",
       });
       router.push("/dashboard/vehicles");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = extractErrorMessage(error, "Failed to create vehicle");
+      
       toast({
-        title: "Error",
-        description: error.message || "Failed to create vehicle",
+        title: "Error Creating Vehicle",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -56,7 +60,7 @@ export default function NewVehiclePage() {
       {/* Page Header */}
       <div className="flex items-center space-x-4">
         <Link href="/dashboard/vehicles">
-          <Button variant="outline" size="sm">
+          <Button variant="ghost" size="sm" className="hover:bg-gray-100 text-gray-600 hover:text-gray-800">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
@@ -267,11 +271,16 @@ export default function NewVehiclePage() {
               {/* Submit Button */}
               <div className="flex justify-end space-x-4">
                 <Link href="/dashboard/vehicles">
-                  <Button type="button" variant="outline">
+                  <Button type="button" variant="outline" size="lg">
                     Cancel
                   </Button>
                 </Link>
-                <Button type="submit" disabled={createVehicle.isPending}>
+                <Button 
+                  type="submit" 
+                  disabled={createVehicle.isPending}
+                  variant="success"
+                  size="lg"
+                >
                   {createVehicle.isPending ? "Creating..." : "Create Vehicle"}
                 </Button>
               </div>

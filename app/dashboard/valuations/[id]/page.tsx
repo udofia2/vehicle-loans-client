@@ -26,7 +26,7 @@ export default function ValuationDetailPage() {
   
   const { data: valuationResponse, isLoading, error } = useValuationById(valuationId)
   const deleteValuation = useDeleteValuation()
-  console.log(valuationResponse?.data.data)
+  
   const valuation = valuationResponse?.data.data
 
   if (error) {

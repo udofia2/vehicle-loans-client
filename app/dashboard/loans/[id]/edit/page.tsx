@@ -105,6 +105,11 @@ export default function EditLoanPage() {
   const onSubmit = async (data: LoanFormData) => {
     updateLoan.mutate({ id: loanId, data }, {
       onSuccess: () => {
+        toast({
+          title: "Success",
+          description: "Loan application updated successfully",
+          variant: "success",
+        });
         router.push("/dashboard/loans")
       }
     })

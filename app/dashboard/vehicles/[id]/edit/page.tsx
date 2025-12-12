@@ -27,6 +27,7 @@ import {
 import { toast } from "@/hooks/use-toast"
 import { useVehicleById, useUpdateVehicle } from "@/hooks/use-vehicle"
 import { ArrowLeft } from "lucide-react"
+import { extractErrorMessage } from "@/lib/utils/error"
 
 const vehicleSchema = z.object({
   vin: z.string().min(17, "VIN must be 17 characters").max(17, "VIN must be 17 characters"),
@@ -96,7 +97,21 @@ export default function EditVehiclePage() {
   const onSubmit = async (data: VehicleFormData) => {
     updateVehicle.mutate({ id: vehicleId, data }, {
       onSuccess: () => {
+        toast({
+          title: "Success",
+          description: "Vehicle updated successfully",
+          variant: "success",
+        });
         router.push("/dashboard/vehicles")
+      },
+      onError: (error: unknown) => {
+        const errorMessage = extractErrorMessage(error, "Failed to update vehicle");
+        
+        toast({
+          title: "Error Updating Vehicle",
+          description: errorMessage,
+          variant: "destructive",
+        });
       }
     })
   }
@@ -122,7 +137,8 @@ export default function EditVehiclePage() {
         <Button
           variant="ghost"
           onClick={() => router.push("/dashboard/vehicles")}
-          className="mb-4"
+          className="mb-4 hover:bg-gray-100 text-gray-600 hover:text-gray-800"
+          size="sm"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Vehicles
@@ -307,12 +323,18 @@ export default function EditVehiclePage() {
               </div>
 
               <div className="flex gap-4 pt-6">
-                <Button type="submit" disabled={updateVehicle.isPending}>
+                <Button 
+                  type="submit" 
+                  disabled={updateVehicle.isPending}
+                  variant="success"
+                  size="lg"
+                >
                   {updateVehicle.isPending ? "Updating..." : "Update Vehicle"}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
+                  size="lg"
                   onClick={() => router.push("/dashboard/vehicles")}
                   disabled={updateVehicle.isPending}
                 >

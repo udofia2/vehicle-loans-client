@@ -29,10 +29,10 @@ import { ArrowLeft, HandHeart } from "lucide-react"
 
 const offerSchema = z.object({
   loanApplicationId: z.string().min(1, "Loan application is required"),
-  interestRate: z.number().min(5).max(30),
-  loanTerm: z.number().int().min(12).max(84),
-  offeredAmount: z.number().min(1000, "Minimum offered amount is 1000"),
-  expirationHours: z.number().int().min(24).max(720).optional(),
+  interestRate: z.number().min(5, "Interest rate must be at least 5%").max(30, "Interest rate cannot exceed 30%"),
+  loanTerm: z.number().int().min(12, "Loan term must be at least 12 months").max(84, "Loan term cannot exceed 84 months"),
+  offeredAmount: z.number().min(100000, "Minimum offered amount is ₦100,000"),
+  expirationHours: z.number().int().min(24, "Must be at least 24 hours").max(720, "Cannot exceed 720 hours").optional(),
 })
 
 type OfferFormData = z.infer<typeof offerSchema>
@@ -41,7 +41,7 @@ export default function NewOfferPage() {
   const router = useRouter()
   const { data: loansData, isLoading: isLoadingLoans } = useMyLoans({ limit: 100 })
   const createOffer = useCreateOffer()
-  console.log(loansData?.data.data)
+  
   const loans = loansData?.data?.data.data || []
 
   const form = useForm<OfferFormData>({
@@ -50,7 +50,7 @@ export default function NewOfferPage() {
       loanApplicationId: "",
       interestRate: 5.0,
       loanTerm: 36,
-      offeredAmount: 0,
+      offeredAmount: 100000,
       expirationHours: 720, // 30 days
     },
   })
@@ -119,18 +119,21 @@ export default function NewOfferPage() {
                   name="offeredAmount"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Offered Amount ($)</FormLabel>
+                      <FormLabel>Offered Amount (₦)</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
-                          step="0.01"
-                          min="1000"
-                          placeholder="Enter offered amount"
+                          step="1000"
+                          min="100000"
+                          placeholder="Enter amount (minimum ₦100,000)"
                           {...field}
                           value={field.value || ""}
                           onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                         />
                       </FormControl>
+                      <p className="text-sm text-muted-foreground">
+                        Minimum amount: ₦100,000
+                      </p>
                       <FormMessage />
                     </FormItem>
                   )}
