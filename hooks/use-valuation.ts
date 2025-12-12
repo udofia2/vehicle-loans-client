@@ -81,7 +81,7 @@ export const useGenerateValuation = () => {
       valuationApi.generate(data),
     onSuccess: (data) => {
       // Update the valuation in cache
-      queryClient.setQueryData(valuationKeys.detail(data.data.id), data);
+      queryClient.setQueryData(valuationKeys.detail(data.data.data.id), data);
       // Invalidate related queries
       queryClient.invalidateQueries({ queryKey: valuationKeys.lists() });
 
@@ -137,7 +137,7 @@ export const useUpdateValuation = () => {
     }) => valuationApi.update(id, data),
     onSuccess: (data) => {
       // Update the specific valuation in cache
-      queryClient.setQueryData(valuationKeys.detail(data.data.id), data);
+      queryClient.setQueryData(valuationKeys.detail(data.data.data.id), data);
       // Invalidate valuation lists
       queryClient.invalidateQueries({ queryKey: valuationKeys.lists() });
 

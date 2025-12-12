@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { vehicleSchema } from "./vehicle";
 
 /**
  * Valuation-related types and schemas
@@ -23,8 +24,10 @@ export const valuationSchema = z.object({
   maxValue: z.number().min(0, "Maximum value must be positive"),
   source: z.enum(["kbb", "edmunds", "nada", "manual", "external_api"]),
   valuationDate: z.string().datetime(),
-  metadata: z.object({}).optional(),
+  metadata: z.string().optional(),
   createdAt: z.string().datetime(),
+  // Optional relations that may be populated
+  vehicle: vehicleSchema.optional(),
 });
 
 export type Valuation = z.infer<typeof valuationSchema>;
@@ -36,7 +39,7 @@ export const valuationCreateSchema = z.object({
   minValue: z.number().min(0, "Minimum value must be positive"),
   maxValue: z.number().min(0, "Maximum value must be positive"),
   source: z.enum(["kbb", "edmunds", "nada", "manual", "external_api"]),
-  metadata: z.object({}).optional(),
+  metadata: z.string().optional(),
 });
 
 // Generate valuation schema for automatic valuation

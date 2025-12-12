@@ -43,7 +43,7 @@ export function VehicleSearchForm({ onVehicleFound, className }: VehicleSearchFo
   // Handle successful search result
   React.useEffect(() => {
     if (searchResult?.data && onVehicleFound) {
-      onVehicleFound(searchResult.data)
+      onVehicleFound(searchResult.data.data)
     }
   }, [searchResult, onVehicleFound])
 
@@ -105,10 +105,10 @@ export function VehicleSearchForm({ onVehicleFound, className }: VehicleSearchFo
             <div className="mt-4 p-4 bg-muted rounded-lg">
               <h4 className="font-medium text-sm mb-2">Vehicle Found:</h4>
               <div className="text-sm space-y-1">
-                <p><span className="font-medium">Make:</span> {searchResult.data.make}</p>
-                <p><span className="font-medium">Model:</span> {searchResult.data.model}</p>
-                <p><span className="font-medium">Year:</span> {searchResult.data.year}</p>
-                <p><span className="font-medium">Mileage:</span> {searchResult.data.mileage?.toLocaleString()} miles</p>
+                <p><span className="font-medium">Make:</span> {searchResult.data.data.make}</p>
+                <p><span className="font-medium">Model:</span> {searchResult.data.data.model}</p>
+                <p><span className="font-medium">Year:</span> {searchResult.data.data.year}</p>
+                <p><span className="font-medium">Mileage:</span> {searchResult.data.data.mileage?.toLocaleString()} miles</p>
               </div>
             </div>
           )}

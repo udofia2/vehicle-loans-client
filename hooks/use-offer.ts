@@ -64,10 +64,10 @@ export const useCreateOffer = () => {
   return useMutation({
     mutationFn: (data: {
       loanApplicationId: string;
-      lenderId: string;
-      amount: number;
       interestRate: number;
-      termMonths: number;
+      loanTerm: number;
+      offeredAmount: number;
+      expirationHours?: number;
     }) => offerApi.create(data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: offerKeys.lists() });
@@ -107,6 +107,41 @@ export const useDeleteOffer = () => {
         title: "Error",
         description:
           error?.response?.data?.message || "Failed to delete loan offer",
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+export const useUpdateOffer = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      offerId,
+      data,
+    }: {
+      offerId: string;
+      data: {
+        offeredAmount?: number;
+        interestRate?: number;
+        loanTerm?: number;
+        expiresAt?: string;
+      };
+    }) => offerApi.update(offerId, data),
+    onSuccess: (_, { offerId }) => {
+      queryClient.invalidateQueries({ queryKey: offerKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: offerKeys.detail(offerId) });
+      toast({
+        title: "Success",
+        description: "Loan offer updated successfully",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description:
+          error?.response?.data?.message || "Failed to update loan offer",
         variant: "destructive",
       });
     },

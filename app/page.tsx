@@ -74,7 +74,7 @@ export default function HomePage() {
                   ) : error ? (
                     "API connecting..."
                   ) : (
-                    `${vehiclesData?.data?.total || 0} vehicles tracked`
+                    `${vehiclesData?.data.data.total || 0} vehicles tracked`
                   )}
                 </span>
               </div>

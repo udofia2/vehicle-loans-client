@@ -78,7 +78,7 @@ export const useUpdateVehicle = () => {
       vehicleApi.update(id, data),
     onSuccess: (data) => {
       // Update the specific vehicle in cache
-      queryClient.setQueryData(vehicleKeys.detail(data.data.id), data);
+      queryClient.setQueryData(vehicleKeys.detail(data.data.data.id), data);
       // Invalidate vehicle lists
       queryClient.invalidateQueries({ queryKey: vehicleKeys.lists() });
 

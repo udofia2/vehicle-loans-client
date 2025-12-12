@@ -27,7 +27,7 @@ export default function VehicleDetailPage() {
   const { data: vehicleResponse, isLoading, error } = useVehicleById(vehicleId)
   const deleteVehicle = useDeleteVehicle()
   
-  const vehicle = vehicleResponse?.data
+  const vehicle = vehicleResponse?.data.data
 
   if (error) {
     toast({
@@ -159,19 +159,19 @@ const getConditionColor = (condition?: string) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Make</p>
-                <p className="text-lg font-semibold">{vehicle?.data.make}</p>
+                <p className="text-lg font-semibold">{vehicle?.make}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Model</p>
-                <p className="text-lg font-semibold">{vehicle?.data.model}</p>
+                <p className="text-lg font-semibold">{vehicle?.model}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Year</p>
-                <p className="text-lg font-semibold">{vehicle?.data.year}</p>
+                <p className="text-lg font-semibold">{vehicle?.year}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Color</p>
-                <p className="text-lg font-semibold capitalize">{vehicle?.data.color}</p>
+                <p className="text-lg font-semibold capitalize">{vehicle?.color}</p>
               </div>
             </div>
           </CardContent>
@@ -186,21 +186,21 @@ const getConditionColor = (condition?: string) => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Transmission</p>
-                <p className="text-lg font-semibold capitalize">{vehicle?.data.transmission}</p>
+                <p className="text-lg font-semibold capitalize">{vehicle?.transmission}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Fuel Type</p>
-                <p className="text-lg font-semibold capitalize">{vehicle?.data.fuelType}</p>
+                <p className="text-lg font-semibold capitalize">{vehicle?.fuelType}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Mileage</p>
-                <p className="text-lg font-semibold">{Number(vehicle?.data.mileage || 0).toLocaleString()} miles</p>
+                <p className="text-lg font-semibold">{Number(vehicle?.mileage || 0).toLocaleString()} miles</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Condition</p>
-                  <Badge className={getConditionColor(vehicle?.data.condition ?? "unknown")}>
-                    {vehicle?.data.condition
-                      ? vehicle?.data.condition[0].toUpperCase() + vehicle?.data.condition.slice(1)
+                  <Badge className={getConditionColor(vehicle?.condition ?? "unknown")}>
+                    {vehicle?.condition
+                      ? vehicle?.condition[0].toUpperCase() + vehicle?.condition.slice(1)
                       : "Unknown"}
                   </Badge>
               </div>
@@ -217,12 +217,12 @@ const getConditionColor = (condition?: string) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">VIN</p>
-                <p className="text-lg font-mono font-semibold">{vehicle?.data.vin}</p>
+                <p className="text-lg font-mono font-semibold">{vehicle?.vin}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Created</p>
                 <p className="text-lg font-semibold">
-                  {new Date(vehicle?.data.createdAt).toLocaleDateString("en-US", {
+                  {new Date(vehicle?.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",

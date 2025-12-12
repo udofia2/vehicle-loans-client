@@ -37,6 +37,13 @@ export const valuationApi = {
   delete: (id: string): Promise<ApiResponse<void>> =>
     apiClient.delete(`/valuations/${id}`),
 
+  // Update valuation
+  update: (
+    id: string,
+    data: Partial<ValuationRequest>
+  ): Promise<ApiResponse<Valuation>> =>
+    apiClient.put(`/valuations/${id}`, data),
+
   // Get valuations for a vehicle
   getByVehicle: (
     vehicleId: string,

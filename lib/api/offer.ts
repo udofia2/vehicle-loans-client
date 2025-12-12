@@ -14,10 +14,10 @@ export const offerApi = {
   // Create new offer
   create: (data: {
     loanApplicationId: string;
-    lenderId: string;
-    amount: number;
     interestRate: number;
-    termMonths: number;
+    loanTerm: number;
+    offeredAmount: number;
+    expirationHours?: number;
   }): Promise<ApiResponse<LoanOffer>> => apiClient.post("/offers", data),
 
   // Get all offers with pagination
@@ -48,6 +48,17 @@ export const offerApi = {
   // Delete offer
   delete: (id: string): Promise<ApiResponse<void>> =>
     apiClient.delete(`/offers/${id}`),
+
+  // Update offer
+  update: (
+    id: string,
+    data: {
+      offeredAmount?: number;
+      interestRate?: number;
+      loanTerm?: number;
+      expiresAt?: string;
+    }
+  ): Promise<ApiResponse<LoanOffer>> => apiClient.put(`/offers/${id}`, data),
 
   // Update offer status
   updateStatus: (

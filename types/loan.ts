@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { vehicleSchema } from "./vehicle";
+import { valuationSchema } from "./valuation";
 
 /**
  * Loan application types and schemas
@@ -42,6 +44,9 @@ export const loanApplicationSchema = z.object({
   ]),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
+  // Optional relations that may be populated
+  vehicle: vehicleSchema.optional(),
+  valuation: valuationSchema.optional(),
 });
 
 export type LoanApplication = z.infer<typeof loanApplicationSchema>;

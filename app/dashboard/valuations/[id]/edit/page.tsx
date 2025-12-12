@@ -34,7 +34,7 @@ const valuationSchema = z.object({
   maxValue: z.number().min(0, "Maximum value must be positive"),
   source: z.enum(["manual", "kbb", "edmunds", "nada", "external_api"]),
   valuationDate: z.string().min(1, "Valuation date is required"),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.string().optional(),
 })
 
 type ValuationFormData = z.infer<typeof valuationSchema>
@@ -58,7 +58,7 @@ export default function EditValuationPage() {
       maxValue: 0,
       source: "manual",
       valuationDate: new Date().toISOString().split('T')[0],
-      metadata: {},
+      metadata: "",
     },
   })
 
@@ -72,7 +72,7 @@ export default function EditValuationPage() {
         maxValue: valuation.data.maxValue,
         source: valuation.data.source as "manual" | "kbb" | "edmunds" | "nada" | "external_api",
         valuationDate: new Date(valuation.data.valuationDate).toISOString().split('T')[0],
-        metadata: valuation.data.metadata || {},
+        metadata: valuation.data.metadata || "",
       })
     }
   }, [valuation, form])

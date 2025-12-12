@@ -1,7 +1,9 @@
 // API Response types - Updated to match backend structure
 export interface ApiResponse<T> {
   success: boolean;
-  data: T;
+  data: {
+    data: T;
+  };
   message: string;
   timestamp: string;
 }
@@ -17,7 +19,9 @@ export interface PaginatedResponse<T> {
 // Complete API Response wrapper for paginated data
 export interface ApiPaginatedResponse<T> {
   success: boolean;
-  data: PaginatedResponse<T>;
+  data: {
+    data: PaginatedResponse<T>;
+  };
   message: string;
   timestamp: string;
 }
